@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
   },
   "scripts": {
     "prezip": "rm -rf functions-build && mkdir functions-build",
@@ -15,9 +12,6 @@
     "build": "mkdir build && cp -r public/* build"
   },
   "main": "index.js",
-  "devDependencies": {
-    "markdown-magic": "^0.1.25"
-  },
   "author": "",
   "license": "MIT"
 }
