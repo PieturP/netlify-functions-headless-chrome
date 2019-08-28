@@ -36,7 +36,7 @@ exports.handler = async (event, context, callback) => {
 
     // await page.waitForSelector('#phenomic')
     pdf = await page.pdf()
-    body = btoa(pdf)
+    body = new Buffer(data).toString('base64')
 
     console.log('done on page')
 
