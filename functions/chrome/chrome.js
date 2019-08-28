@@ -8,23 +8,29 @@ exports.handler = async (event, context, callback) => {
   try {
     const executablePath = await chromium.executablePath
 
+    console.log(executablePath);
     // setup
     browser = await puppeteer.launch({
       args: chromium.args,
       executablePath: executablePath,
       headless: chromium.headless,
     })
+    console.log('browser set up');
 
     // Do stuff with headless chrome
     const page = await browser.newPage()
     const targetUrl = 'https://davidwells.io'
+
+    console.log('browser new page')
 
     // Goto page and then do stuff
     await page.goto(targetUrl, {
       waitUntil: ["domcontentloaded", "networkidle0"]
     })
 
-    await page.waitForSelector('#phenomic')
+    console.log('browser page loaded')
+
+    // await page.waitForSelector('#phenomic')
 
     theTitle = await page.title();
 
