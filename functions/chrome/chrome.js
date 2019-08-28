@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer-core')
 
 const api_key = process.env.API_KEY;
 
-const hasAuthorization = (event) => {
+const hasAuthorization = (event, context) => {
   if (event.queryStringParameters.api_key !== 'undefined' && event.queryStringParameters.api_key == api_key) {
     return true;
   }
@@ -15,7 +15,7 @@ const hasAuthorization = (event) => {
 
 exports.handler = async (event, context, callback) => {
 
-  if (!hasAuthorization(event)){
+  if (!hasAuthorization(event, context)){
     return callback(null, {statusCode: 403})
   }
 
