@@ -55,7 +55,7 @@ exports.handler = async (event, context, callback) => {
 
   return callback(null, {
     statusCode: 200,
-    body: pdf,
-    headers: { "Content-Type": "application/pdf" }
+    body: JSON.stringify(pdf),
+    // headers: { "Content-Type": "application/pdf" }
   })
 }
