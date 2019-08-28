@@ -7,6 +7,10 @@ exports.handler = async (event, context, callback) => {
   let body = null
 
   console.log('spawning chrome headless')
+  console.log(JSON.stringify(event))
+  console.log(JSON.stringify(context))
+  console.log(JSON.stringify(process.env))
+  //console.log(INCOMING_HOOK_URL)
 
   const targetUrl = event.queryStringParameters.url || 'https://eenengelswoord.nl/';
 
@@ -18,27 +22,19 @@ exports.handler = async (event, context, callback) => {
       executablePath: executablePath,
       headless: chromium.headless,
     })
-    console.log('browser set up');
 
     // Do stuff with headless chrome
     const page = await browser.newPage()
-
-
-    console.log('browser new page')
 
     // Goto page and then do stuff
     await page.goto(targetUrl, {
       waitUntil: ["domcontentloaded", "networkidle0"]
     })
 
-
-    console.log('browser page loaded')
-
-    // await page.waitForSelector('#phenomic')
     pdf = await page.pdf()
     body = new Buffer(pdf).toString('base64')
 
-    console.log('done on page')
+    console.log(`done on page ${targetUrl}`)
 
   } catch (error) {
     console.log('error', error)
