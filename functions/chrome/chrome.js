@@ -34,7 +34,7 @@ exports.handler = async (event, context, callback) => {
     console.log('browser page loaded')
 
     // await page.waitForSelector('#phenomic')
-    pdf = await page.printToPdf();
+    pdf = await page.pdf();
 
     console.log('done on page')
 
