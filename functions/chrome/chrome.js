@@ -2,13 +2,14 @@ const chromium = require('chrome-aws-lambda')
 const puppeteer = require('puppeteer-core')
 
 exports.handler = async (event, context, callback) => {
-  let theTitle = null
+  let pdf = null
   let browser = null
   console.log('spawning chrome headless')
+
+  const targetUrl = event.queryStringParameters.url || 'https://eenengelswoord.nl/';
+
   try {
     const executablePath = await chromium.executablePath
-
-    console.log(executablePath);
     // setup
     browser = await puppeteer.launch({
       args: chromium.args,
@@ -19,7 +20,7 @@ exports.handler = async (event, context, callback) => {
 
     // Do stuff with headless chrome
     const page = await browser.newPage()
-    const targetUrl = 'https://davidwells.io'
+
 
     console.log('browser new page')
 
@@ -28,13 +29,14 @@ exports.handler = async (event, context, callback) => {
       waitUntil: ["domcontentloaded", "networkidle0"]
     })
 
+
+
     console.log('browser page loaded')
 
     // await page.waitForSelector('#phenomic')
+    pdf = await page.printToPdf();
 
-    theTitle = await page.title();
-
-    console.log('done on page', theTitle)
+    console.log('done on page')
 
   } catch (error) {
     console.log('error', error)
@@ -53,8 +55,7 @@ exports.handler = async (event, context, callback) => {
 
   return callback(null, {
     statusCode: 200,
-    body: JSON.stringify({
-      title: theTitle,
-    })
+    body: pdf,
+    headers: { "Content-Type": "application/pdf" }
   })
 }
