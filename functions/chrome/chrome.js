@@ -6,8 +6,11 @@ const api_key = process.env.API_KEY;
 exports.handler = async (event, context, callback) => {
 
   if (typeof event.queryStringParameters.api_key == 'undefined'
-    || event.queryStringParameters.api_key !== api_key) {
-    return callback(null, {statusCode: 403});
+    || event.queryStringParameters.api_key !== api_key)
+  {
+    console.log('unauthorized')
+    console.log(JSON.stringify(event))
+    return callback(null, {statusCode: 403})
   }
 
   let pdf = null
