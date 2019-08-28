@@ -1,7 +1,15 @@
 const chromium = require('chrome-aws-lambda')
 const puppeteer = require('puppeteer-core')
 
+const api_key = process.env.API_KEY;
+
 exports.handler = async (event, context, callback) => {
+
+  if (typeof event.queryStringParameters.api_key == 'undefined'
+    || event.queryStringParameters.api_key !== api_key) {
+    return callback(null, {statusCode: 403});
+  }
+
   let pdf = null
   let browser = null
   let body = null
