@@ -32,7 +32,6 @@ exports.handler = async (event, context, callback) => {
     })
 
 
-
     console.log('browser page loaded')
 
     // await page.waitForSelector('#phenomic')
