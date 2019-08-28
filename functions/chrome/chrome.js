@@ -15,10 +15,6 @@ exports.handler = async (event, context, callback) => {
   let body = null
 
   console.log('spawning chrome headless')
-  console.log(JSON.stringify(event))
-  console.log(JSON.stringify(context))
-  console.log(JSON.stringify(process.env))
-  //console.log(INCOMING_HOOK_URL)
 
   const targetUrl = event.queryStringParameters.url || 'https://eenengelswoord.nl/';
 
