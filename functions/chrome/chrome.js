@@ -4,6 +4,8 @@ const puppeteer = require('puppeteer-core')
 exports.handler = async (event, context, callback) => {
   let pdf = null
   let browser = null
+  let body = null
+
   console.log('spawning chrome headless')
 
   const targetUrl = event.queryStringParameters.url || 'https://eenengelswoord.nl/';
@@ -34,7 +36,8 @@ exports.handler = async (event, context, callback) => {
     console.log('browser page loaded')
 
     // await page.waitForSelector('#phenomic')
-    pdf = await page.pdf();
+    pdf = await page.pdf()
+    body = btoa(pdf)
 
     console.log('done on page')
 
@@ -54,8 +57,9 @@ exports.handler = async (event, context, callback) => {
   }
 
   return callback(null, {
+    isBase64Encoded: true,
     statusCode: 200,
-    body: JSON.stringify(pdf),
-    // headers: { "Content-Type": "application/pdf" }
+    body: body,
+    headers: { "Content-Type": "application/pdf" }
   })
 }
