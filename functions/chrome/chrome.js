@@ -1,17 +1,6 @@
 const chromium = require('chrome-aws-lambda')
 const puppeteer = require('puppeteer-core')
-
-const api_key = process.env.API_KEY;
-
-const hasAuthorization = (event, context) => {
-  if (event.queryStringParameters.api_key !== 'undefined' && event.queryStringParameters.api_key == api_key) {
-    return true;
-  }
-  console.log('unauthorized')
-  console.log(JSON.stringify(event))
-  console.log(JSON.stringify(context))
-  return false;
-}
+const hasAuthorization = require('./auth.js')
 
 exports.handler = async (event, context, callback) => {
 
@@ -22,8 +11,6 @@ exports.handler = async (event, context, callback) => {
   let pdf = null
   let browser = null
   let body = null
-
-  console.log('spawning chrome headless')
 
   const targetUrl = event.queryStringParameters.url || 'https://eenengelswoord.nl/';
 
