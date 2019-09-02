@@ -31,7 +31,17 @@ exports.handler = async (event, context, callback) => {
       waitUntil: ["domcontentloaded", "networkidle0"]
     })
 
-    pdf = await page.pdf()
+    pdf = await page.pdf({
+      format: "A4",
+      printBackground: true,
+      displayHeaderFooter: false,
+      margin: {
+        left: "0cm",
+        right: "0cm",
+        top: "0cm",
+        bottom: "0cm",
+      }
+    })
     body = new Buffer(pdf).toString('base64')
 
     console.log(`done on page ${targetUrl}`)
