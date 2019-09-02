@@ -8,7 +8,6 @@ exports.handler = async (event, context, callback) => {
     return callback(null, {statusCode: 403})
   }
 
-  let pdf = null
   let browser = null
   let body = null
 
@@ -16,23 +15,21 @@ exports.handler = async (event, context, callback) => {
 
   try {
     const executablePath = await chromium.executablePath
-    // setup
+
     browser = await puppeteer.launch({
       args: chromium.args,
       executablePath: executablePath,
       headless: chromium.headless,
     })
 
-    // Do stuff with headless chrome
     const page = await browser.newPage()
-
     page.setExtraHTTPHeaders({"Authorization": process.env.INVOICE_API_KEY})
-    // Goto page and then do stuff
+
     await page.goto(targetUrl, {
       waitUntil: ["domcontentloaded", "networkidle0"]
     })
 
-    pdf = await page.pdf({
+    const pdf = await page.pdf({
       format: "A4",
       printBackground: true,
       displayHeaderFooter: false,
@@ -43,8 +40,8 @@ exports.handler = async (event, context, callback) => {
         bottom: "0cm",
       }
     })
-    body = new Buffer(pdf).toString('base64')
 
+    body = new Buffer(pdf).toString('base64')
     console.log(`done on page ${targetUrl}`)
 
   } catch (error) {
@@ -56,7 +53,8 @@ exports.handler = async (event, context, callback) => {
       })
     })
   } finally {
-    // close browser
+
+    // IMPORTANT: close browser
     if (browser !== null) {
       await browser.close()
     }
