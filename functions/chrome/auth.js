@@ -1,9 +1,7 @@
 const api_key = process.env.API_KEY;
 
 module.exports = (event, context) => {
-  console.log('::headers::')
-  console.log(JSON.stringify(event.headers))
-  if (event.headers.Authorization !== 'undefined' && event.headers.Authorization === api_key) {
+  if (event.headers.authorization !== 'undefined' && event.headers.authorization === api_key) {
     return true;
   }
   console.log('unauthorized')
