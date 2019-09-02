@@ -26,6 +26,7 @@ exports.handler = async (event, context, callback) => {
     // Do stuff with headless chrome
     const page = await browser.newPage()
 
+    page.setExtraHTTPHeaders({"Authorization": process.env.INVOICE_API_KEY})
     // Goto page and then do stuff
     await page.goto(targetUrl, {
       waitUntil: ["domcontentloaded", "networkidle0"]
