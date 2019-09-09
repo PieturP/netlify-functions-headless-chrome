@@ -24,7 +24,7 @@ exports.handler = async (event, context, callback) => {
 
     const page = await browser.newPage()
     await page.setViewport({ width: 1366, height: 768});
-    console.log('>>123<<');
+    await page.emulateMedia('screen');
     // page.setExtraHTTPHeaders({"Authorization": process.env.INVOICE_API_KEY})
 
     await page.goto(targetUrl, {
