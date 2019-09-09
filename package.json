@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "prezip": "rm -rf functions-build && mkdir functions-build",
-    "zip": "cd functions/chrome && npm install && chmod -R 777 node_modules && zip -r chrome.zip * && cd ../test && npm install",
-    "postzip": "mv functions/chrome/chrome.zip functions-build",
+    "zip": "cd functions/chrome && npm install && chmod -R 777 node_modules && zip -r chrome.zip * && cd ../test && npm install && chmod -R 777 node_modules && zip -r test.zip *",
+    "postzip": "mv functions/chrome/chrome.zip functions-build && mv functions/test/test.zip functions-build",
     "prebuild": "npm run zip",
     "build": "mkdir build && cp -r public/* build"
   },
