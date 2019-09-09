@@ -1,15 +1,17 @@
-import fetch from "node-fetch"
+const axios = require("axios");
 
-// axios.get(url)
+console.log('building...');
 
-exports.handler = async (event, context) => {
+const date = new Date().toString();
+const url = `https://hooks.zapier.com/hooks/catch/3416786/o3zmw51/?date=${date}&description=building&source=script`;
+
+
+exports.handler = async (event, context, cb) => {
   console.log('buidling 2')
-  const url = `https://hooks.zapier.com/hooks/catch/3416786/o3zmw51/?date=123&description=456&source=script`
+  const response = await axios.get(url)
 
-  const response = await fetch(url)
-    const data = await response.json()
-    return  {
-      statusCode: 200,
-      body: JSON.stringify(data.projects)
-    }
+  return cb(null, {
+    statusCode: 200,
+    body: JSON.stringify(response),
+  })
 }
