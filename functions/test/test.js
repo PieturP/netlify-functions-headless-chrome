@@ -8,10 +8,11 @@ const url = `https://hooks.zapier.com/hooks/catch/3416786/o3zmw51/?date=${date}&
 
 exports.handler = async (event, context, cb) => {
   console.log('buidling 2')
-  const response = await axios.get(url)
+
+  await axios.get(url)
 
   return cb(null, {
     statusCode: 200,
-    body: response,
+    body: 'Ok',
   })
 }
