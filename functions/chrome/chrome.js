@@ -24,7 +24,8 @@ exports.handler = async (event, context, callback) => {
 
     const page = await browser.newPage()
     await page.setViewport({ width: 1366, height: 768});
-    page.setExtraHTTPHeaders({"Authorization": process.env.INVOICE_API_KEY})
+    console.log('>>123<<');
+    // page.setExtraHTTPHeaders({"Authorization": process.env.INVOICE_API_KEY})
 
     await page.goto(targetUrl, {
       waitUntil: ["domcontentloaded", "networkidle0"]
