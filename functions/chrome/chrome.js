@@ -17,9 +17,10 @@ exports.handler = async (event, context, callback) => {
     const executablePath = await chromium.executablePath
 
     browser = await puppeteer.launch({
-      args: chromium.args,
-      executablePath: executablePath,
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+      executablePath: await chromium.executablePath,
       headless: chromium.headless,
+      ignoreHTTPSErrors: true,
     })
 
     const page = await browser.newPage()
